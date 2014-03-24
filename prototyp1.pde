@@ -22,11 +22,19 @@ float multiplier=3.0f;
 //debug
 boolean showCam=false;
 boolean headTrackingEnabled=true;
+boolean headTrackingPossible=true;
 void setup(){
   //init
   size(1080, 1920, P3D);
-  
-  prepareHeadTracking();
+  try {
+    prepareHeadTracking();
+  }
+  catch (Exception e) {
+    println("No Camera Found - default to Mouse-X-Position");
+    headTrackingPossible = false;
+    headTrackingEnabled = false;
+    multiplier = 1.0f;
+  }
   prepareImages();
 }
 void prepareHeadTracking()
@@ -54,20 +62,6 @@ void prepareImages(){
   pbgr= loadImage("backgroundpeople_fullhd_240offset.png");
 }
 
-/*PShape createShapeFromImg(PImage inImg)
-{
-  PShape tmp = createShape();
-  tmp.beginShape();
-  tmp.texture(inImg);
-  tmp.noStroke();
-  tmp.vertex(0, 0, 0, 0, 0);
-  tmp.vertex(inImg.width, 0, 0, inImg.width, 0);
-  tmp.vertex(inImg.width,  inImg.height, 0, inImg.width, inImg.height);
-  tmp.vertex(0,  inImg.height, 0, 0, inImg.height);
-  tmp.endShape();
-  return tmp;
-}*/
-
 void draw(){
   float percent=float(mouseX)/float(width);
   percent*=multiplier;
@@ -88,7 +82,7 @@ void draw(){
   image(p4, 1080-p4.width+14*multiplier-28*percent, 240);
   image(p2, 23*multiplier-46*percent, 240);
   
-  if(showCam)
+  if(showCam && headTrackingPossible)
     image(video, 0, 0 );
   
 }
@@ -188,7 +182,8 @@ void keyPressed() {
   }
   else if (key == 'h' || key == 'H')
   {
-    headTrackingEnabled = !headTrackingEnabled;
+    if( headTrackingPossible )
+      headTrackingEnabled = !headTrackingEnabled;
   }
 }
 
