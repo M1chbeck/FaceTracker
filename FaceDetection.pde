@@ -17,7 +17,6 @@ void setup() {
   video = new Capture(this, captureWidth, captureHeight);
   opencv = new OpenCV(this, captureWidth, captureHeight);
   opencv.loadCascade(OpenCV.CASCADE_FRONTALFACE);  
-
   video.start();
 }
 boolean sketchFullScreen() {
@@ -84,60 +83,57 @@ void draw() {
     }
   }
   
-  //highlight Faces
+//highlight Faces
   for (int i = 0; i < faces.length; i++) { 
-     if( i != currFace)
-        stroke(0, 255, 0);
-     else 
-        stroke(255, 0, 0);   
-     rect(faces[i].x, faces[i].y, faces[i].width, faces[i].height);
+    if( i != currFace)
+      stroke(0, 255, 0);
+    else 
+      stroke(255, 0, 0);   
+    rect(faces[i].x, faces[i].y, faces[i].width, faces[i].height);
   }
-       if(smooth)
-         stroke(0, 255, 255);
-       else
-         stroke(0, 0, 255);         
-       ellipse(percentages.x*width/2, percentages.y*height/2, 3, 3);
-  /*if ( faces.length > 0)
-  {   
-    float xpos = faces[0].x/(float)(captureWidth-40.0)*width; // 40 offset
-    float ypos = faces[0].y/(float)(captureHeight-40.0)*height; // 40 offset
-    float zpos = (height/2) / tan(PI*30.0 / 180.0);
-    float close = 200.0;
-    float far = 500.0;
-    zpos -= faces[0].width*2.0;
-    camera(width-xpos, ypos, zpos, width/2.0, height/2.0, -400, 0, 1, 0); 
-    //camera(width-xpos, ypos, zpos, width-xpos, ypos, -400, 0, 1, 0);
-    println("width: " + faces[0].width+ " zpos: "+zpos);
-    pushMatrix();
-    translate(width/2, height/2, -100);
-    scale(1,1,0.01);
-    stroke(255);
-    noFill();
-    sphere(50);
-    popMatrix();
-
-    pushMatrix();
-    translate(width/3, height/3, -200);
-    sphere(50);
-    popMatrix();
-
-    pushMatrix();
-    translate(2*width/3, 3*height/4, -350);
-    sphere(50);
-    popMatrix();
-
-    pushMatrix();
-    translate(width/2, height/2, -100);
-    box(width, height, width*2);
-    popMatrix();
-  }/**/
+   if(smooth)
+     stroke(0, 255, 255);
+   else
+     stroke(0, 0, 255);         
+   ellipse(percentages.x*width/2, percentages.y*height/2, 3, 3);
 }
 PVector convertPixelPosToPercentage(Rectangle[] faces, int pos)
 {
   return new PVector(float(faces[pos].x)/float((captureWidth-faces[pos].width)),
                      float(faces[pos].y)/float((captureHeight-faces[pos].height)));
 }
-void captureEvent(Capture c) {
-  c.read();
-}
 
+/*** old scene *****
+{   
+  float xpos = faces[0].x/(float)(captureWidth-40.0)*width; // 40 offset
+  float ypos = faces[0].y/(float)(captureHeight-40.0)*height; // 40 offset
+  float zpos = (height/2) / tan(PI*30.0 / 180.0);
+  float close = 200.0;
+  float far = 500.0;
+  zpos -= faces[0].width*2.0;
+  camera(width-xpos, ypos, zpos, width/2.0, height/2.0, -400, 0, 1, 0); 
+  //camera(width-xpos, ypos, zpos, width-xpos, ypos, -400, 0, 1, 0);
+  println("width: " + faces[0].width+ " zpos: "+zpos);
+  pushMatrix();
+  translate(width/2, height/2, -100);
+  scale(1,1,0.01);
+  stroke(255);
+  noFill();
+  sphere(50);
+  popMatrix();
+
+  pushMatrix();
+  translate(width/3, height/3, -200);
+  sphere(50);
+  popMatrix();
+
+  pushMatrix();
+  translate(2*width/3, 3*height/4, -350);
+  sphere(50);
+  popMatrix();
+
+  pushMatrix();
+  translate(width/2, height/2, -100);
+  box(width, height, width*2);
+  popMatrix();
+}/**/
