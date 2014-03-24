@@ -6,12 +6,9 @@ Capture video;
 OpenCV opencv;
 int captureWidth = 320;
 int captureHeight = 240;
-int offsetX=0;
+
 PVector pos = new PVector(captureWidth/2, captureHeight/2, 0); //xpos, ypos, ID
 PVector percentages = new PVector(0.5, 0.5, 0); //xpos, ypos, ID
-PVector[] oldPos;
-float xpos=0.5;
-float ypos=0.5;
 int currFace = -1;
 boolean smooth=false;
 
@@ -28,10 +25,10 @@ boolean sketchFullScreen() {
 }
 void draw() {
   background(0);
-  scale(2);
+  scale(2); // double size o.O
   opencv.loadImage(video);
 
-  //image(video, 0, 0 );
+  image(video, 0, 0 );
 
   noFill();
   noStroke();
@@ -99,7 +96,7 @@ void draw() {
          stroke(0, 255, 255);
        else
          stroke(0, 0, 255);         
-       ellipse(percentages.x*width/2, 240, 3, 3);
+       ellipse(percentages.x*width/2, percentages.y*height/2, 3, 3);
   /*if ( faces.length > 0)
   {   
     float xpos = faces[0].x/(float)(captureWidth-40.0)*width; // 40 offset
