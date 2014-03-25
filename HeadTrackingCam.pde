@@ -12,7 +12,7 @@ class HeadTrackingCam {
   int captureHeight = 240;
 
   //debug
-  boolean showCam=true;
+  boolean showCam=false;
   boolean headTrackingEnabled=true;
   boolean headTrackingPossible=true;
 
@@ -118,7 +118,7 @@ class HeadTrackingCam {
   }
   void showVideo(int w,int h){
     if(!showCam) //for some reason this will glitch tracking if this function is not executed
-    {
+    {      
       w = width+50;
     }
     pushMatrix();
